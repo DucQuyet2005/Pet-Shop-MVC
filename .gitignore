@@ -1,0 +1,17 @@
+# ===== .NET build artifacts =====
+bin/
+obj/
+
+# ===== Visual Studio =====
+.vs/
+*.user
+*.suo
+
+# ===== Logs =====
+*.log
+
+# ===== Database runtime =====
+*.db
+
+# ===== Publish output =====
+publish/
