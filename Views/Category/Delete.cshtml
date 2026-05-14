@@ -1,0 +1,41 @@
+@model PetShop.Models.Entities.Category
+@{
+    ViewData["Title"] = "Xóa danh mục";
+}
+
+<div class="page-header" style="background:linear-gradient(135deg,#c1121f,#9d0208);">
+    <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a asp-action="Index" style="color:rgba(255,255,255,.7);text-decoration:none;">Danh mục</a></li><li class="breadcrumb-item active">Xóa</li></ol></nav>
+        <h1>🗑️ Xóa danh mục</h1>
+        <p>Hành động này không thể hoàn tác</p>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            @if (Model.Products.Any())
+            {
+                <div class="alert alert-warning">
+                    <strong>⚠️ Lưu ý!</strong> Danh mục này có <strong>@Model.Products.Count sản phẩm</strong>. Xóa danh mục sẽ xóa tất cả sản phẩm liên quan.
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    <strong>⚠️ Cảnh báo!</strong> Bạn sắp xóa vĩnh viễn danh mục này.
+                </div>
+            }
+            <div class="detail-card text-center">
+                <div style="font-size:4rem;margin-bottom:1rem;">📂</div>
+                <h3 style="font-weight:800;color:var(--dark);">@Model.CategoryName</h3>
+                <p style="color:var(--text-light);">@Model.Products.Count sản phẩm trong danh mục</p>
+                <form asp-action="Delete" class="d-flex gap-3 mt-4">
+                    <input type="hidden" asp-for="CategoryId" />
+                    <input type="submit" value="🗑️ Xác nhận xóa" class="btn btn-danger flex-fill" />
+                    <a asp-action="Index" class="btn btn-secondary flex-fill">Hủy bỏ</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

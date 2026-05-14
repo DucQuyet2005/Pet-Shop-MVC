@@ -1,0 +1,44 @@
+@model PetShop.Models.Entities.Product
+@{
+    ViewData["Title"] = "Xóa sản phẩm";
+    var emoji = Model.Category?.CategoryName?.ToLower().Contains("chó") == true ? "🐕"
+              : Model.Category?.CategoryName?.ToLower().Contains("mèo") == true ? "🐈" : "🐾";
+    var discountedPrice = Model.ProductDiscount > 0
+        ? Model.ProductPrice * (1 - Model.ProductDiscount / 100)
+        : Model.ProductPrice;
+}
+
+<div class="page-header" style="background:linear-gradient(135deg,#c1121f,#9d0208);">
+    <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a asp-action="Index" style="color:rgba(255,255,255,.7);text-decoration:none;">Sản phẩm</a></li><li class="breadcrumb-item active">Xóa</li></ol></nav>
+        <h1>🗑️ Xóa sản phẩm</h1>
+        <p>Hành động này không thể hoàn tác</p>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="alert alert-danger mb-4">
+                <strong>⚠️ Cảnh báo!</strong> Bạn sắp xóa vĩnh viễn sản phẩm này khỏi hệ thống.
+            </div>
+            <div class="detail-card">
+                <div class="text-center mb-4">
+                    <div style="font-size:5rem;">@emoji</div>
+                </div>
+                <table class="table" style="font-size:.95rem;">
+                    <tr><td class="fw-bold text-muted" style="width:40%;border:none;">Tên sản phẩm</td><td style="border:none;font-weight:700;">@Model.ProductName</td></tr>
+                    <tr><td class="fw-bold text-muted" style="border:none;">Danh mục</td><td style="border:none;">@(Model.Category?.CategoryName ?? "N/A")</td></tr>
+                    <tr><td class="fw-bold text-muted" style="border:none;">Giá bán</td><td style="border:none;color:var(--primary);font-weight:700;">@discountedPrice.ToString("N0") ₫</td></tr>
+                    <tr><td class="fw-bold text-muted" style="border:none;">Tồn kho</td><td style="border:none;">@Model.ProductQuantity sản phẩm</td></tr>
+                    <tr><td class="fw-bold text-muted" style="border:none;">Trạng thái</td><td style="border:none;">@(Model.IsAvailable ? "✅ Đang bán" : "❌ Ngừng bán")</td></tr>
+                </table>
+                <form asp-action="Delete" class="d-flex gap-3 mt-3">
+                    <input type="hidden" asp-for="ProductId" />
+                    <input type="submit" value="🗑️ Xác nhận xóa" class="btn btn-danger flex-fill" />
+                    <a asp-action="Index" class="btn btn-secondary flex-fill">Hủy bỏ</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

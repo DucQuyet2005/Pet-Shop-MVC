@@ -1,0 +1,79 @@
+@model PetShop.Models.Entities.Product
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    var img = Model.ProductImages?.FirstOrDefault(i => i.IsPrimary) ?? Model.ProductImages?.FirstOrDefault();
+    var emoji = Model.Category?.CategoryName?.ToLower().Contains("chó") == true ? "🐕"
+              : Model.Category?.CategoryName?.ToLower().Contains("mèo") == true ? "🐈"
+              : Model.Category?.CategoryName?.ToLower().Contains("cá") == true ? "🐠" : "🐾";
+    var discountedPrice = Model.ProductDiscount > 0
+        ? Model.ProductPrice * (1 - Model.ProductDiscount / 100)
+        : Model.ProductPrice;
+}
+
+<div class="page-header">
+    <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" style="color:rgba(255,255,255,.7);text-decoration:none;">Trang chủ</a></li><li class="breadcrumb-item"><a asp-action="Index" style="color:rgba(255,255,255,.7);text-decoration:none;">Sản phẩm</a></li><li class="breadcrumb-item active">Chi tiết</li></ol></nav>
+        <h1>📦 Chi tiết sản phẩm</h1>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="detail-card">
+        <div class="row g-4 align-items-start">
+            <div class="col-md-4 text-center">
+                <div style="background:linear-gradient(135deg,#f0f0f8,#e8e8f5);border-radius:var(--radius);height:260px;display:flex;align-items:center;justify-content:center;font-size:8rem;margin-bottom:1rem;">
+                    @if (img != null)
+                    {
+                        <img src="@img.ImageUrl" alt="@Model.ProductName" style="width:100%;height:260px;object-fit:cover;border-radius:var(--radius);" />
+                    }
+                    else { @emoji }
+                </div>
+                @if (Model.IsAvailable)
+                {
+                    <span class="badge badge-available" style="font-size:.9rem;padding:.5rem 1.2rem;">● Đang bán</span>
+                }
+                else
+                {
+                    <span class="badge badge-unavailable" style="font-size:.9rem;padding:.5rem 1.2rem;">● Hết hàng</span>
+                }
+            </div>
+            <div class="col-md-8">
+                <div class="detail-label">Danh mục</div>
+                <div class="mb-3">
+                    <span style="background:var(--primary-light);color:var(--primary);padding:.35rem 1rem;border-radius:50px;font-weight:700;font-size:.9rem;">
+                        @(Model.Category?.CategoryName ?? "Chưa phân loại")
+                    </span>
+                </div>
+
+                <h2 style="font-family:'Poppins',sans-serif;font-weight:700;color:var(--dark);margin-bottom:.75rem;">@Model.ProductName</h2>
+
+                <p style="color:var(--text-light);line-height:1.7;margin-bottom:1.5rem;">@Model.ProductDescription</p>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-sm-6">
+                        <div class="detail-label">Giá gốc</div>
+                        <div style="font-size:1.1rem;font-weight:600;color:var(--text);">@Model.ProductPrice.ToString("N0") ₫</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="detail-label">Giảm giá</div>
+                        <div style="font-size:1.1rem;font-weight:600;color:var(--text);">@Model.ProductDiscount %</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="detail-label">Giá bán</div>
+                        <div class="detail-price">@discountedPrice.ToString("N0") ₫</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="detail-label">Tồn kho</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--secondary);">@Model.ProductQuantity sản phẩm</div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 flex-wrap mt-4">
+                    <a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-warning">✏️ Chỉnh sửa</a>
+                    <a asp-action="Delete" asp-route-id="@Model.ProductId" class="btn btn-danger">🗑️ Xóa</a>
+                    <a asp-action="Index" class="btn btn-secondary">← Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

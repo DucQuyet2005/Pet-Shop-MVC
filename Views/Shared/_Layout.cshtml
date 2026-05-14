@@ -1,29 +1,36 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PetShop</title>
+    <meta name="description" content="PetShop - Cửa hàng thức ăn và phụ kiện thú cưng chất lượng cao" />
+    <title>@ViewData["Title"] - PetShop 🐾</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PetShop.styles.css" asp-append-version="true" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PetShop</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="brand-icon">🐾</span>
+                    <span>Pet<b>Shop</b></span>
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">🏠 Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Product" asp-action="Index">🛍️ Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index">📂 Danh mục</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -31,17 +38,48 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
         <div class="container">
-            &copy; 2025 - PetShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-brand">Pet<b>Shop</b> 🐾</div>
+                    <p class="mt-2 mb-0" style="font-size:0.9rem;line-height:1.7;">
+                        Cửa hàng thức ăn và phụ kiện thú cưng chất lượng cao.<br/>
+                        Chăm sóc bé yêu của bạn tốt hơn mỗi ngày.
+                    </p>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <h5>Liên kết</h5>
+                    <a asp-controller="Home" asp-action="Index">Trang chủ</a>
+                    <a asp-controller="Product" asp-action="Index">Sản phẩm</a>
+                    <a asp-controller="Category" asp-action="Index">Danh mục</a>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <h5>Danh mục nổi bật</h5>
+                    <a href="#">🐕 Thức ăn cho Chó</a>
+                    <a href="#">🐈 Thức ăn cho Mèo</a>
+                    <a href="#">🐠 Phụ kiện & Đồ chơi</a>
+                </div>
+                <div class="col-lg-3">
+                    <h5>Liên hệ</h5>
+                    <p style="font-size:0.9rem;line-height:1.8;">
+                        📍 123 Đường Thú Cưng, TP.HCM<br/>
+                        📞 0901 234 567<br/>
+                        ✉️ hello@petshop.vn
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                © 2025 PetShop. Made with ❤️ for pets.
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

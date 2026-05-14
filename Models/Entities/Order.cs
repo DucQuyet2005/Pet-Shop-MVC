@@ -20,8 +20,8 @@ namespace PetShop.Models.Entities
         [Required]
         public string Status { get; set; } = "Pending";//Pending:Chua giai quyet,Shipping:Dang giao,Delivered:Da giao,Cancelled:Da huy
         [Required]
-        [MaxLength(50, ErrorMessage = "Payment meothod can not get over 50 characters")]
-        public String PaymentMethod { get; set; } = "Cash On Delivery";//CashOnDelivery,OnlinePayment
+        [MaxLength(50, ErrorMessage = "Payment method can not get over 50 characters")]
+        public string PaymentMethod { get; set; } = "CashOnDelivery";//CashOnDelivery,OnlinePayment
         [Required]
         public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }

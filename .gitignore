@@ -1,17 +1,100 @@
-# ===== .NET build artifacts =====
+## ===== .NET build artifacts =====
 bin/
 obj/
+*.dll
+*.exe
+*.pdb
 
-# ===== Visual Studio =====
+## ===== Visual Studio =====
 .vs/
+.vscode/
 *.user
 *.suo
+*.sln.iml
+*.userprefs
+*.csproj.user
+*.vbproj.user
 
-# ===== Logs =====
+## ===== Visual Studio Code =====
+.vscode/
+*.code-workspace
+
+## ===== Logs & Diagnostics =====
 *.log
+logs/
+Logs/
+*.trx
+TestResults/
+coverage/
+.coverage
 
-# ===== Database runtime =====
+## ===== Database & Local Data =====
 *.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+App_Data/
 
-# ===== Publish output =====
+## ===== Publish & Build Output =====
 publish/
+PublishProfiles/
+PublishOutput/
+
+## ===== NuGet Package Management =====
+.nuget/
+*.nupkg
+*.snupkg
+packages/
+.packages/
+
+## ===== Dependencies & IDE Tools =====
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+## ===== ReSharper & Code Analysis =====
+_ReSharper*/
+*.resharper
+*.DotSettings.user
+bin-resharper/
+
+## ===== Build System & Environment =====
+.env
+.env.local
+.env.*.local
+appsettings.local.json
+appsettings.*.local.json
+launchSettings.local.json
+
+## ===== Runtime Cache & Temporary =====
+.cache/
+*.cache
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+
+## ===== Node (if using npm/webpack) =====
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+## ===== Platform Specific =====
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory

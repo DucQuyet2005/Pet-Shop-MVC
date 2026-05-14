@@ -1,0 +1,70 @@
+@model PetShop.Models.Entities.Category
+@{
+    ViewData["Title"] = "Chi tiết danh mục";
+}
+
+<div class="page-header">
+    <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a asp-action="Index" style="color:rgba(255,255,255,.7);text-decoration:none;">Danh mục</a></li><li class="breadcrumb-item active">Chi tiết</li></ol></nav>
+        <h1>📂 @Model.CategoryName</h1>
+        <p>@Model.Products.Count sản phẩm trong danh mục này</p>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="d-flex gap-3 mb-4">
+        <a asp-action="Edit" asp-route-id="@Model.CategoryId" class="btn btn-warning">✏️ Chỉnh sửa</a>
+        <a asp-action="Delete" asp-route-id="@Model.CategoryId" class="btn btn-danger">🗑️ Xóa danh mục</a>
+        <a asp-action="Index" class="btn btn-secondary">← Quay lại</a>
+    </div>
+
+    @if (!Model.Products.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">📦</div>
+            <h4>Chưa có sản phẩm nào</h4>
+            <p>Danh mục này chưa có sản phẩm nào</p>
+            <a asp-controller="Product" asp-action="Create" class="btn btn-primary mt-3">+ Thêm sản phẩm</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Tồn kho</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 1; }
+                    @foreach (var p in Model.Products)
+                    {
+                        var discountedPrice = p.ProductDiscount > 0 ? p.ProductPrice * (1 - p.ProductDiscount / 100) : p.ProductPrice;
+                        <tr>
+                            <td style="color:var(--text-light);font-weight:600;">@i</td>
+                            <td><strong>@p.ProductName</strong></td>
+                            <td style="color:var(--primary);font-weight:700;">@discountedPrice.ToString("N0") ₫</td>
+                            <td>@p.ProductQuantity</td>
+                            <td>
+                                @if (p.IsAvailable)
+                                { <span class="badge badge-available">Đang bán</span> }
+                                else
+                                { <span class="badge badge-unavailable">Hết hàng</span> }
+                            </td>
+                            <td>
+                                <a asp-controller="Product" asp-action="Details" asp-route-id="@p.ProductId" class="btn btn-info btn-sm">Chi tiết</a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

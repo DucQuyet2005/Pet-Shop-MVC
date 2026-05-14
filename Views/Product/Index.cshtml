@@ -1,0 +1,92 @@
+@model IEnumerable<PetShop.Models.Entities.Product>
+@{
+    ViewData["Title"] = "Sản phẩm";
+}
+
+<div class="page-header">
+    <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" style="color:rgba(255,255,255,.7);text-decoration:none;">Trang chủ</a></li><li class="breadcrumb-item active">Sản phẩm</li></ol></nav>
+        <h1>🛍️ Danh sách sản phẩm</h1>
+        <p>Quản lý toàn bộ sản phẩm trong cửa hàng</p>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <span class="fw-bold" style="color:var(--text-light);">@Model.Count() sản phẩm</span>
+        </div>
+        <a asp-action="Create" class="btn btn-primary">
+            <span style="font-size:1rem;">+</span> Thêm sản phẩm
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">📦</div>
+            <h4>Chưa có sản phẩm nào</h4>
+            <p>Hãy thêm sản phẩm đầu tiên vào cửa hàng của bạn</p>
+            <a asp-action="Create" class="btn btn-primary mt-3">+ Thêm sản phẩm</a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                var img = item.ProductImages?.FirstOrDefault(i => i.IsPrimary) ?? item.ProductImages?.FirstOrDefault();
+                var emoji = item.Category?.CategoryName?.ToLower().Contains("chó") == true ? "🐕"
+                          : item.Category?.CategoryName?.ToLower().Contains("mèo") == true ? "🐈"
+                          : item.Category?.CategoryName?.ToLower().Contains("cá") == true ? "🐠" : "🐾";
+                var discountedPrice = item.ProductDiscount > 0
+                    ? item.ProductPrice * (1 - item.ProductDiscount / 100)
+                    : item.ProductPrice;
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="product-card">
+                        <div class="product-card-img">
+                            @if (img != null)
+                            {
+                                <img src="@img.ImageUrl" alt="@item.ProductName" style="width:100%;height:100%;object-fit:cover;" />
+                            }
+                            else { @emoji }
+                        </div>
+                        <div class="product-card-body">
+                            <div class="product-card-category">@(item.Category?.CategoryName ?? "Chưa phân loại")</div>
+                            <div class="product-card-title">@item.ProductName</div>
+                            <div class="product-card-desc">@item.ProductDescription</div>
+                            <div class="d-flex gap-1 mb-2 flex-wrap">
+                                @if (item.IsAvailable)
+                                {
+                                    <span class="badge badge-available">● Còn hàng (@item.ProductQuantity)</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-unavailable">● Hết hàng</span>
+                                }
+                                @if (item.ProductDiscount > 0)
+                                {
+                                    <span class="badge" style="background:var(--primary-light);color:var(--primary);">-@item.ProductDiscount%</span>
+                                }
+                            </div>
+                            <div class="product-card-footer">
+                                <div>
+                                    <div class="product-price">@discountedPrice.ToString("N0")₫</div>
+                                    @if (item.ProductDiscount > 0)
+                                    {
+                                        <span class="product-price-original">@item.ProductPrice.ToString("N0")₫</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 mt-3">
+                                <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-info btn-sm flex-fill">Chi tiết</a>
+                                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-warning btn-sm flex-fill">Sửa</a>
+                                <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger btn-sm">🗑</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
